@@ -17,4 +17,10 @@ public class Task {
         return returnString;
     }
 
+    public Task(String user, String taskName, int dueDate){
+        this.user = user;
+        this.taskName = taskName;
+        this.dueDate = dueDate;
+    }
+
 }
