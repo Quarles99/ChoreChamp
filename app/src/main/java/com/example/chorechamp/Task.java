@@ -23,4 +23,28 @@ public class Task {
         this.dueDate = dueDate;
     }
 
+    public String getTaskName(){
+        return taskName;
+    }
+
+    public void setTaskName(String tN){
+        taskName = tN;
+    }
+
+    public String getUserName(){
+        return user;
+    }
+
+    public void setUserName(String uN){
+        user = uN;
+    }
+
+    public int getDueDate(){
+        return dueDate;
+    }
+
+    public void setDueDate(int dD){
+        dueDate = dD;
+    }
+
 }
