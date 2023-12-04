@@ -8,7 +8,7 @@ public class Task {
     public String taskName;
     public int dueDate;
 
-    @NonNull
+    @Override
     public String toString(){
         String returnString;
 
