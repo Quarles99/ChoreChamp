@@ -16,7 +16,7 @@
             android:name=".TaskDetails"
             android:exported="false" />
         <activity
-            android:name=".TaskCompletion"
+            android:name=".AddTask"
             android:exported="false" />
         <activity
             android:name=".RoomHome"
