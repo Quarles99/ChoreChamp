@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "61998252815",
+    "firebase_url": "https://chorechamp-812ca-default-rtdb.firebaseio.com",
+    "project_id": "chorechamp-812ca",
+    "storage_bucket": "chorechamp-812ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61998252815:android:1c656bbd717e3bc123347a",
+        "android_client_info": {
+          "package_name": "com.example.chorechamp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD26KVhPP6Lwo-jc6vgl3BaYzkgcypnzJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
