@@ -12,8 +12,6 @@ tDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         list.add(t);
                     }
                 }
-
-
             }
 
             @Override
@@ -26,10 +24,9 @@ tDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
  FirebaseDatabase database = FirebaseDatabase.getInstance();
      private DatabaseReference rDatabase;
      private DatabaseReference tDatabase;
-     private DatabaseReference uDatabase;
         rDatabase = database.getReference("rooms");
         tDatabase = database.getReference("tasks");
-        uDatabase = database.getReference("users");
+
 
 - How to add items to their repective database
     Task t = new Task("Joe", "Sweep", "11012023", "34567");
