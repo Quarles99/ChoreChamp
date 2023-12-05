@@ -3,6 +3,7 @@ package com.example.chorechamp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
 EditText username, roomid, roomName;
 Button joinButton, createButton;
-private DatabaseReference rData, tData, uData;
+private DatabaseReference rData, tData;
 private boolean roomExist;
 
 
@@ -30,18 +31,21 @@ private boolean roomExist;
         @Override
         public void onClick(View v) {
             //get the room id
-            //test if roomid exists, if not diplay error
-            if(roomExist == false){
-                Toast.makeText(getApplicationContext(), "This room ID is not valid", Toast.LENGTH_SHORT).show();
-            }else{
-                //check username is not duplicated
-                //username needs to be matched with roomid
-                //if username does not exist create username object with roomid
-
-
+            String ID = roomid.getText().toString();
+            if(ID.length() < 5){
+                Toast.makeText(getApplicationContext(), "This room ID must be 5 characters",
+                        Toast.LENGTH_SHORT).show();
+            }else {
+                //test if roomid exists, if not diplay error
+                if (roomExist == false) {
+                    Toast.makeText(getApplicationContext(), "This room ID is not valid",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent i = new Intent(getApplicationContext(), RoomHome.class);
+                    i.putExtra("ID", ID);
+                    startActivity(i);
+                }
             }
-
-
         }
     };
 
@@ -61,7 +65,6 @@ private boolean roomExist;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         rData = database.getReference("rooms");
         tData = database.getReference("tasks");
-        uData = database.getReference("users");
 
         roomExist = false;
 
