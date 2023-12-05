@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EBF1F4"
     tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/roomName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="343dp"
+        android:layout_width="162dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="556dp"
         android:ems="10"
         android:hint="Room Name"
         android:inputType="text"
@@ -22,45 +23,56 @@
         android:id="@+id/userET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginBottom="59dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/roomName" />
+        app:layout_constraintBottom_toTopOf="@+id/roomName"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/createRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="141dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="36dp"
+        android:backgroundTint="#253444"
         android:text="Create Room"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userET" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roomName" />
 
     <EditText
         android:id="@+id/joinRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="93dp"
-        android:layout_marginTop="54dp"
+        android:layout_width="115dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="56dp"
         android:ems="10"
         android:hint="Room ID"
         android:inputType="number"
         android:maxLength="5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createRoom" />
+        app:layout_constraintTop_toBottomOf="@+id/userET" />
 
     <Button
         android:id="@+id/joinButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="147dp"
-        android:layout_marginTop="11dp"
+        android:layout_width="138dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#253444"
         android:text="Join Room"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/joinRoom" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="362dp"
+        android:layout_height="580dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/screenshot_2023_12_05_at_12_42_25_pm"
+        tools:layout_editor_absoluteY="-128dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
