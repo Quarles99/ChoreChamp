@@ -71,8 +71,8 @@
         android:layout_width="362dp"
         android:layout_height="580dp"
         android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/userET"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/screenshot_2023_12_05_at_12_42_25_pm"
-        tools:layout_editor_absoluteY="-128dp" />
+        app:srcCompat="@drawable/screenshot_2023_12_05_at_12_42_25_pm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 
 public class Task {
 
-    public String user;
+    public String user, roomID;
     public String taskName;
+    public boolean completed;
     public int dueDate;
+
 
     @Override
     public String toString(){
@@ -17,10 +19,29 @@ public class Task {
         return returnString;
     }
 
-    public Task(String user, String taskName, int dueDate){
+    public Task(String user, String taskName, int dueDate, String roomID){
         this.user = user;
         this.taskName = taskName;
         this.dueDate = dueDate;
+        this.roomID = roomID;
+
+        completed = false;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(String roomID) {
+        this.roomID = roomID;
     }
 
     public String getTaskName(){

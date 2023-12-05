@@ -32,8 +32,9 @@ public class AddTask extends AppCompatActivity {
                 taskName = taskET.getText().toString();
                 userName = userNameET.getText().toString();
                 dueDate = Integer.parseInt(dueDateET.getText().toString());
-                Task task = new Task(taskName, userName, dueDate);
-                Log.d("task Create", task.toString());
+                //need way to get roomID from screen
+                //Task task = new Task(taskName, userName, dueDate, roomID);
+                //Log.d("task Create", task.toString());
                 // Add task to firebase here
             }
         });
