@@ -1,0 +1,37 @@
+- three lists rooms, tasks, users
+- every time query will use the same basic function
+tDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                for (DataSnapshot d: snapshot.getChildren()) {
+                    Task t = (Task) d.getValue();
+                    if (t.getRoomID() == roomid) {
+                        list.add(t);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+-Depending on what is needed intialize and assign firebase and database refrences
+ FirebaseDatabase database = FirebaseDatabase.getInstance();
+     private DatabaseReference rDatabase;
+     private DatabaseReference tDatabase;
+     private DatabaseReference uDatabase;
+        rDatabase = database.getReference("rooms");
+        tDatabase = database.getReference("tasks");
+        uDatabase = database.getReference("users");
+
+- How to add items to their repective database
+    Task t = new Task("Joe", "Sweep", "11012023", "34567");
+        String key = tDatabase.push().getKey();
+        tDatabase.child(key).setValue(t);
