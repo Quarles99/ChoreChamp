@@ -17,11 +17,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-EditText username, roomid, roomName;
+EditText roomid, roomName;
 Button joinButton, createButton;
 private DatabaseReference rData, tData;
 private boolean roomExist;
@@ -32,11 +34,12 @@ private boolean roomExist;
         public void onClick(View v) {
             //get the room id
             String ID = roomid.getText().toString();
+            doesRoomExist(ID);
+
             if(ID.length() < 5){
                 Toast.makeText(getApplicationContext(), "This room ID must be 5 characters",
                         Toast.LENGTH_SHORT).show();
             }else {
-                //test if roomid exists, if not diplay error
                 if (roomExist == false) {
                     Toast.makeText(getApplicationContext(), "This room ID is not valid",
                             Toast.LENGTH_SHORT).show();
@@ -49,45 +52,78 @@ private boolean roomExist;
         }
     };
 
+    View.OnClickListener createRoom = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String newName = roomName.getText().toString();
+
+            Random gen = new Random();
+            String randID = Integer.toString(gen.nextInt(99999));
+
+
+            doesRoomExist(randID);
+            while(roomExist == true){
+                randID = Integer.toString(gen.nextInt(99999));
+                doesRoomExist(randID);
+            }
+
+            Room r = new Room(newName, randID);
+
+            String key = rData.push().getKey();
+            rData.child(key).setValue(r);
+
+            Intent i = new Intent(getApplicationContext(), RoomHome.class);
+            i.putExtra("ID", randID);
+            i.putExtra("name", newName);
+            startActivity(i);
+
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username = findViewById(R.id.userET);
         roomid = findViewById(R.id.joinRoom);
         roomName = findViewById(R.id.roomName);
 
         joinButton = findViewById(R.id.joinButton);
         createButton = findViewById(R.id.createRoom);
+        joinButton.setOnClickListener(join);
+        createButton.setOnClickListener(createRoom);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         rData = database.getReference("rooms");
         tData = database.getReference("tasks");
-
-        roomExist = false;
-
     }
 
-    public void doesRoomExist() {
+    public void doesRoomExist(String abc) {
         rData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                String ID = roomid.getText().toString();
+                String ID = abc;
                 Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
                 for (DataSnapshot d : snapshot.getChildren()) {
-                    Room r = (Room) d.getValue();
-                    if (r.getId() == ID) {
-                        roomExist = true;
+                    HashMap<String, Object> roomData = (HashMap<String, Object>) d.getValue();
+                    Room r = new Room(roomData.get("name").toString(), roomData.get("id").toString());
+                    if (r.getId().equals(ID)) {
+                        setRoomExist(true);
+                        break;
                     }
                 }
-            }
 
+
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    public void setRoomExist(boolean state){
+        roomExist = state;
     }
 }
