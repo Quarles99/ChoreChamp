@@ -10,24 +10,28 @@
         android:id="@+id/dueDateET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_outline"
         android:ems="10"
         android:hint="01/01/2000"
         android:inputType="date"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dueDate"
-        app:layout_constraintTop_toBottomOf="@+id/assignedPersonET"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58000004" />
 
     <TextView
         android:id="@+id/AssignedPerson"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
         android:text="Assigned Person:"
-        app:layout_constraintBottom_toTopOf="@+id/dueDate"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/assignedPersonET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTaskTV" />
+        app:layout_constraintTop_toBottomOf="@+id/addTaskTV"
+        app:layout_constraintVertical_bias="0.23000002" />
 
     <TextView
         android:id="@+id/dueDate"
@@ -37,18 +41,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dueDateET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AssignedPerson"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58000004" />
 
     <EditText
         android:id="@+id/taskNameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_outline"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/assignedPersonET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addTaskTV"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -56,21 +62,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task Name:"
-        app:layout_constraintBottom_toTopOf="@+id/AssignedPerson"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/taskNameET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17000002" />
 
     <EditText
         android:id="@+id/assignedPersonET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_outline"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/dueDateET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toEndOf="@+id/AssignedPerson"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskNameET" />
 
     <Button
@@ -78,6 +86,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
+        android:foreground="@drawable/button_outline"
+        android:background="@drawable/button_outline"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
