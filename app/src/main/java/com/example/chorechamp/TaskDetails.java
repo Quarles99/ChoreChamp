@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +23,7 @@ public class TaskDetails extends AppCompatActivity {
     private TextView taskNameTV;
     private TextView userNameTV;
     private TextView dueDateTV;
+    private Button goBack;
 
 
     @Override
@@ -34,6 +38,17 @@ public class TaskDetails extends AppCompatActivity {
         taskNameTV = findViewById(R.id.taskName);
         userNameTV = findViewById(R.id.taskUser);
         dueDateTV = findViewById(R.id.taskDueDate);
+
+        goBack = findViewById(R.id.returnButton);
+
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent back = new Intent(getApplicationContext(), RoomHome.class);
+                startActivity(back);
+            }
+        });
+
     }
 
     @Override
@@ -59,7 +74,7 @@ public class TaskDetails extends AppCompatActivity {
                         // The document exists, retrieve data
                         String taskN = dataSnapshot.child("user").getValue(String.class);
                         String userN = dataSnapshot.child("taskName").getValue(String.class);
-                        int dueDate = dataSnapshot.child("dueDate").getValue(Integer.class);
+                        int dueDate = Integer.parseInt(dataSnapshot.child("dueDate").getValue(String.class));
                         String roomID = dataSnapshot.child("roomID").getValue(String.class);
 
                         taskNameTV.setText(taskN);
