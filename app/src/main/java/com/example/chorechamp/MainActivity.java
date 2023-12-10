@@ -26,29 +26,15 @@ public class MainActivity extends AppCompatActivity {
 EditText roomid, roomName;
 Button joinButton, createButton;
 private DatabaseReference rData, tData;
-private boolean roomExist;
+private boolean roomExist, roomExists;;
 
 
     View.OnClickListener join = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //get the room id
             String ID = roomid.getText().toString();
-            doesRoomExist(ID);
 
-            if(ID.length() < 5){
-                Toast.makeText(getApplicationContext(), "This room ID must be 5 characters",
-                        Toast.LENGTH_SHORT).show();
-            }else {
-                if (roomExist == false) {
-                    Toast.makeText(getApplicationContext(), "This room ID is not valid",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent i = new Intent(getApplicationContext(), RoomHome.class);
-                    i.putExtra("ID", ID);
-                    startActivity(i);
-                }
-            }
+            doesRoomExist(ID);
         }
     };
 
@@ -56,19 +42,14 @@ private boolean roomExist;
         @Override
         public void onClick(View v) {
             String newName = roomName.getText().toString();
-
             Random gen = new Random();
-            String randID = Integer.toString(gen.nextInt(99999));
+            String randID;
 
-
-            doesRoomExist(randID);
-            while(roomExist == true){
+            do {
                 randID = Integer.toString(gen.nextInt(99999));
-                doesRoomExist(randID);
-            }
+            } while (doesRoomExistSynchronously(randID));
 
             Room r = new Room(newName, randID);
-
             String key = rData.push().getKey();
             rData.child(key).setValue(r);
 
@@ -76,7 +57,6 @@ private boolean roomExist;
             i.putExtra("ID", randID);
             i.putExtra("name", newName);
             startActivity(i);
-
         }
     };
 
@@ -97,33 +77,72 @@ private boolean roomExist;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         rData = database.getReference("rooms");
         tData = database.getReference("tasks");
+
+
     }
+
 
     public void doesRoomExist(String abc) {
         rData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 String ID = abc;
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                roomExist = false;
+
                 for (DataSnapshot d : snapshot.getChildren()) {
                     HashMap<String, Object> roomData = (HashMap<String, Object>) d.getValue();
                     Room r = new Room(roomData.get("name").toString(), roomData.get("id").toString());
                     if (r.getId().equals(ID)) {
-                        setRoomExist(true);
+                        roomExist = true;
                         break;
                     }
                 }
-
-
+                handleRoomExistenceCheck();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                // Handle cancellation if needed
             }
         });
     }
+    private void handleRoomExistenceCheck() {
+        // Check the roomExist flag after the asynchronous call
+        String ID = roomid.getText().toString();
+        if (ID.length() < 5) {
+            Toast.makeText(getApplicationContext(), "This room ID must be 5 characters", Toast.LENGTH_SHORT).show();
+        } else {
+            if (roomExist) {
+                Intent i = new Intent(getApplicationContext(), RoomHome.class);
+                i.putExtra("ID", ID);
+                startActivity(i);
+            } else {
+                Toast.makeText(getApplicationContext(), "This room ID is not valid", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
-    public void setRoomExist(boolean state){
-        roomExist = state;
+    public boolean doesRoomExistSynchronously(String ID) {
+        roomExists = false;
+
+        rData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    HashMap<String, Object> roomData = (HashMap<String, Object>) d.getValue();
+                    Room r = new Room(roomData.get("name").toString(), roomData.get("id").toString());
+                    if (r.getId().equals(ID)) {
+                        roomExists = true;
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle cancellation if needed
+            }
+        });
+
+        return roomExists;
     }
 }
