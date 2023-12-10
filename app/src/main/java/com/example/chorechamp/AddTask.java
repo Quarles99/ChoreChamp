@@ -51,9 +51,6 @@ public class AddTask extends AppCompatActivity {
 
                 String key = tData.push().getKey();
                 tData.child(key).setValue(t);
-                //Task task = new Task(taskName, userName, dueDate, roomID);
-                //Log.d("task Create", task.toString());
-                // Add task to firebase here
             }
         });
 
