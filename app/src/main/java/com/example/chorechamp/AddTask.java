@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,6 +30,10 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        taskET = findViewById(R.id.taskNameET);
+        userNameET = findViewById(R.id.assignedPersonET);
+        dueDateET = findViewById(R.id.dueDateET);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         rData = database.getReference("rooms");
@@ -48,12 +53,16 @@ public class AddTask extends AppCompatActivity {
                 String roomID = i.getStringExtra("ID");
 
                 Task t = new Task(userName, taskName, dueDate, roomID);
+                Log.d("task Create", t.toString());
 
                 String key = tData.push().getKey();
                 tData.child(key).setValue(t);
-                //Task task = new Task(taskName, userName, dueDate, roomID);
-                //Log.d("task Create", task.toString());
-                // Add task to firebase here
+                //Log.d("task Create", t.toString());
+
+                Toast.makeText(getApplicationContext(), "Task added!", Toast.LENGTH_SHORT);
+                Intent back = new Intent(getApplicationContext(), RoomHome.class);
+                startActivity(back);
+
             }
         });
 
