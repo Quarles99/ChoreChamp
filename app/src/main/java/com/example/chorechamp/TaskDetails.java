@@ -19,8 +19,8 @@ public class TaskDetails extends AppCompatActivity {
 
         // This method will be called when a new intent is received.
 
-        // You can retrieve data from the new intent like this:
-        String taskName = intent.getStringExtra("TaskName"); // Replace "key" with the actual key used to pass data
+        // Retrieve data from the new intent:
+        String taskName = intent.getStringExtra("TaskName");
 
         // Perform actions based on the received intent data
         if (taskName != null) {

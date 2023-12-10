@@ -20,7 +20,7 @@ tDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             }
         });
 
--Depending on what is needed intialize and assign firebase and database refrences
+-Depending on what is needed initialize and assign firebase and database references
  FirebaseDatabase database = FirebaseDatabase.getInstance();
      private DatabaseReference rDatabase;
      private DatabaseReference tDatabase;
@@ -28,7 +28,7 @@ tDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
         tDatabase = database.getReference("tasks");
 
 
-- How to add items to their repective database
+- How to add items to their respective database
     Task t = new Task("Joe", "Sweep", "11012023", "34567");
         String key = tDatabase.push().getKey();
         tDatabase.child(key).setValue(t);
