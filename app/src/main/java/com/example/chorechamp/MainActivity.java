@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
 EditText roomid, roomName;
 Button joinButton, createButton;
 private DatabaseReference rData, tData;
-private boolean roomExist, roomExists;;
+private boolean roomExist, roomExists;
+private String name;
 
 
     View.OnClickListener join = new View.OnClickListener() {
@@ -94,6 +95,7 @@ private boolean roomExist, roomExists;;
                     Room r = new Room(roomData.get("name").toString(), roomData.get("id").toString());
                     if (r.getId().equals(ID)) {
                         roomExist = true;
+                        name = r.getName();
                         break;
                     }
                 }
@@ -106,7 +108,6 @@ private boolean roomExist, roomExists;;
         });
     }
     private void handleRoomExistenceCheck() {
-        // Check the roomExist flag after the asynchronous call
         String ID = roomid.getText().toString();
         if (ID.length() < 5) {
             Toast.makeText(getApplicationContext(), "This room ID must be 5 characters", Toast.LENGTH_SHORT).show();
@@ -114,6 +115,8 @@ private boolean roomExist, roomExists;;
             if (roomExist) {
                 Intent i = new Intent(getApplicationContext(), RoomHome.class);
                 i.putExtra("ID", ID);
+                i.putExtra("name", name);
+
                 startActivity(i);
             } else {
                 Toast.makeText(getApplicationContext(), "This room ID is not valid", Toast.LENGTH_SHORT).show();
@@ -123,7 +126,6 @@ private boolean roomExist, roomExists;;
 
     public boolean doesRoomExistSynchronously(String ID) {
         roomExists = false;
-
         rData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -142,7 +144,6 @@ private boolean roomExist, roomExists;;
                 // Handle cancellation if needed
             }
         });
-
         return roomExists;
     }
 }
