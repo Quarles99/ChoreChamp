@@ -30,7 +30,9 @@ public class TaskDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_details);
-
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("ID");
+        String name = intent.getStringExtra("Room");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         tDatabase = database.getReference("tasks");
@@ -45,6 +47,8 @@ public class TaskDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent back = new Intent(getApplicationContext(), RoomHome.class);
+                back.putExtra("ID", id);
+                back.putExtra("name", name);
                 startActivity(back);
             }
         });

@@ -36,19 +36,22 @@ public class RoomHome extends AppCompatActivity {
     private Button addTask;
     private DatabaseReference tasksRef;
     private TextView title;
+    String roomID;
+    private boolean isDataSnapshotReady = false;
 
+    private DataSnapshot tasksDataSnapshot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_home);
 
         Intent intent = getIntent();
-        String roomID = intent.getStringExtra("ID");
+        roomID = intent.getStringExtra("ID");
         String roomName = intent.getStringExtra("name");
 
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        tasksRef = firebaseDatabase.getReference().child("tasks"); // Replace "tasks" with your actual tasks node
+        tasksRef = firebaseDatabase.getReference().child("tasks");
 
         retrieveTasksAndSort(roomID);
         addTask = findViewById(R.id.addTask);
@@ -62,19 +65,12 @@ public class RoomHome extends AppCompatActivity {
         choresToDoList = new ArrayList<>();
         choresCompletedList = new ArrayList<>();
 
-        // Add some example chores to do
-
-
-        // Create adapters for the lists
         toDoAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.textViewChore, choresToDoList);
         completedAdapter = new ArrayAdapter<>(this, R.layout.list_item2, R.id.textViewChore, choresCompletedList);
 
-
-        // Set adapters to the list views
         listViewToDo.setAdapter(toDoAdapter);
         listViewCompleted.setAdapter(completedAdapter);
 
-        // Simulate moving items from "To Do" list to "Completed" list (for example, on item click)
         listViewToDo.setOnItemLongClickListener((parent, view, position, id) -> {
             String completedChore = choresToDoList.get(position);
             choresCompletedList.add(completedChore);
@@ -87,7 +83,8 @@ public class RoomHome extends AppCompatActivity {
             String chore = choresToDoList.get(position);
             Intent taskDetails = new Intent(getApplicationContext(), TaskDetails.class);
             taskDetails.putExtra("TaskName", chore);
-
+            taskDetails.putExtra("ID", roomID);
+            taskDetails.putExtra("Room", roomName);
             startActivity(taskDetails);
         });
 
@@ -100,7 +97,6 @@ public class RoomHome extends AppCompatActivity {
             return true;
         });
 
-        //Add task listener
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,37 +105,29 @@ public class RoomHome extends AppCompatActivity {
                 startActivity(i);
             }
         });
-    }
-    /*private void retrieveTaskNamesForRoomID(String desiredRoomID) {
-        Query query = tasksRef.orderByChild("roomID").equalTo(desiredRoomID);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        Button btnToggleCompletion = findViewById(R.id.btnToggleCompletion);
+        btnToggleCompletion.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Task task = snapshot.getValue(Task.class);
-                        if (task != null) {
-                            String taskName = task.getTaskName();
-                            // Do something with the taskName (e.g., display in UI, log)
-                            choresToDoList.add(taskName);
-                            toDoAdapter.notifyDataSetChanged();
-                        }
-                    }
-                } else {
-                    Log.d("No tasks", "No tasks found for the specified roomID");
+            public void onClick(View v) {
+                if (isDataSnapshotReady) {
+                    toggleCompletionStatus(choresToDoList, false); // Set completed to false for tasks in choresToDoList
+                    toggleCompletionStatus(choresCompletedList, true); // Set completed to true for tasks in choresCompletedList
+                    removeTasks(choresCompletedList);
+                }else{
+                    Log.e("Firebase Error", "DataSnapshot is not ready yet.");
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Firebase Error", "Error fetching tasks: " + databaseError.getMessage());
+                updateTaskCompletionStatus();
             }
-        });}*/
+        });
+    }
     private void retrieveTasksAndSort(String desiredRoomID) {
         Query query = tasksRef.orderByChild("roomID").equalTo(desiredRoomID);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                tasksDataSnapshot = dataSnapshot;
+                isDataSnapshotReady = true;
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Task task = snapshot.getValue(Task.class);
@@ -152,7 +140,7 @@ public class RoomHome extends AppCompatActivity {
                             }
                         }
                     }
-                    // Update your ListView adapters here
+
                     toDoAdapter.notifyDataSetChanged();
                     completedAdapter.notifyDataSetChanged();
                 } else {
@@ -165,6 +153,40 @@ public class RoomHome extends AppCompatActivity {
                 Log.e("Firebase Error", "Error fetching tasks: " + databaseError.getMessage());
             }
         });
+    }
+    private void toggleCompletionStatus(ArrayList<String> tasks, boolean completedStatus) {
+        for (String taskName : tasks) {
+            for (DataSnapshot snapshot : tasksDataSnapshot.getChildren()) {
+                Task task = snapshot.getValue(Task.class);
+                if (task != null && task.getTaskName().equals(taskName)) {
+                    snapshot.getRef().child("completed").setValue(completedStatus);
+                }
+            }
+        }
+        toDoAdapter.notifyDataSetChanged();
+        completedAdapter.notifyDataSetChanged();
+    }
+
+
+    private void updateTaskCompletionStatus() {
+
+        choresToDoList.clear();
+        choresCompletedList.clear();
+
+        retrieveTasksAndSort(roomID);
+    }
+    private void removeTasks(ArrayList<String> tasks) {
+        for (String taskName : tasks) {
+            for (DataSnapshot snapshot : tasksDataSnapshot.getChildren()) {
+                Task task = snapshot.getValue(Task.class);
+                if (task != null && task.getTaskName().equals(taskName)) {
+
+                    snapshot.getRef().removeValue();
+                }
+            }
+        }
+        toDoAdapter.notifyDataSetChanged();
+        completedAdapter.notifyDataSetChanged();
     }
 
 }
