@@ -37,6 +37,7 @@ public class RoomHome extends AppCompatActivity {
     private DatabaseReference tasksRef;
     private TextView title;
     String roomID;
+    private Button back;
     private boolean isDataSnapshotReady = false;
 
     private DataSnapshot tasksDataSnapshot;
@@ -49,6 +50,7 @@ public class RoomHome extends AppCompatActivity {
         roomID = intent.getStringExtra("ID");
         String roomName = intent.getStringExtra("name");
 
+        back = findViewById(R.id.backButt);
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         tasksRef = firebaseDatabase.getReference().child("tasks");
@@ -105,6 +107,15 @@ public class RoomHome extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
+
         Button btnToggleCompletion = findViewById(R.id.btnToggleCompletion);
         btnToggleCompletion.setOnClickListener(new View.OnClickListener() {
             @Override
