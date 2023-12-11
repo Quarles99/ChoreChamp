@@ -3,26 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textViewRoomName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Room Name"
+        android:textColor="#000000"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
     <Button
         android:id="@+id/addTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Task"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_below="@id/listViewCompleted" />
+        android:text="Add Task"
+        android:textColorLink="#253444"
+        android:backgroundTint="#253444"/>
     <ListView
         android:id="@+id/listViewToDo"
         android:layout_width="match_parent"
+        android:layout_below="@+id/textViewRoomName"
+        android:background="@drawable/rounded_corners"
         android:layout_height="wrap_content"
         android:layout_above="@id/divider"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="#253444" />
+         />
 
     <View
         android:id="@+id/divider"
@@ -40,6 +56,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="#c0c0c0" />
+        android:background="@drawable/roundcorner2" />
 
 </RelativeLayout>

@@ -19,6 +19,7 @@ public class Task {
         return returnString;
     }
 
+    public Task(){}
     public Task(String user, String taskName, int dueDate, String roomID){
         this.user = user;
         this.taskName = taskName;
@@ -27,7 +28,9 @@ public class Task {
 
         completed = false;
     }
-
+    public boolean isCompleted() {
+        return completed;
+    }
     public String getUser() {
         return user;
     }
