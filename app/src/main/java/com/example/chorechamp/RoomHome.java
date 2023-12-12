@@ -96,6 +96,8 @@ public class RoomHome extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        /*
+        DELETE BUTTON FUNCTION
         Button btnToggleCompletion = findViewById(R.id.btnToggleCompletion);
         btnToggleCompletion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +112,7 @@ public class RoomHome extends AppCompatActivity {
 
                 updateTaskCompletionStatus();
             }
-        });
+        });*/
     }
     private void retrieveTasksAndSort(String desiredRoomID) {
         Query query = tasksRef.orderByChild("roomID").equalTo(desiredRoomID);

@@ -70,15 +70,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/roundcorner2" />
-    <Button
-        android:id="@+id/btnToggleCompletion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete Tasks"
-        android:layout_below="@id/listViewCompleted"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#253444"/>
+
     <Button
         android:id="@+id/backButt"
         android:layout_width="match_parent"
