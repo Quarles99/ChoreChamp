@@ -26,18 +26,14 @@ public class TaskDetails extends AppCompatActivity {
     private TextView userNameTV;
     private TextView dueDateTV;
     private Button goBack;
+    FirebaseDatabase database;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_details);
-        Intent intent = getIntent();
-        String id = intent.getStringExtra("ID");
-        String name = intent.getStringExtra("Room");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        tDatabase = database.getReference("tasks");
+        database = FirebaseDatabase.getInstance();
 
         taskNameTV = findViewById(R.id.taskName);
         userNameTV = findViewById(R.id.taskUser);
@@ -49,8 +45,6 @@ public class TaskDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent back = new Intent(getApplicationContext(), RoomHome.class);
-                back.putExtra("ID", id);
-                back.putExtra("name", name);
                 startActivity(back);
             }
         });
@@ -62,7 +56,7 @@ public class TaskDetails extends AppCompatActivity {
         super.onNewIntent(intent);
 
         String taskName = intent.getStringExtra("TaskName");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Log.d("Intent Task Name", taskName);
         tDatabase = database.getReference("tasks");
         String ID = intent.getStringExtra("ID");
 
@@ -72,8 +66,9 @@ public class TaskDetails extends AppCompatActivity {
                 String taskN = "";
                 String userN = "";
                 int dueDate = 0;
+                Log.d("Data change", "data change");
 
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                //Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
                 for (DataSnapshot d: snapshot.getChildren()) {
                     Task t = (Task) d.getValue();
                     Log.d("Task Name", t.getTaskName().toString());
@@ -81,6 +76,9 @@ public class TaskDetails extends AppCompatActivity {
                         taskN = t.getTaskName();
                         userN = t.getUser();
                         dueDate = t.getDueDate();
+                        Log.d("TaskName from Database", taskN);
+                        Log.d("UserName from Database", userN);
+                        Log.d("DueDate from Database", String.valueOf(dueDate));
                     }
                 }
                 taskNameTV.setText(taskN);
