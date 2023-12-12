@@ -33,20 +33,20 @@ public class TaskDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_details);
+
         database = FirebaseDatabase.getInstance();
 
         taskNameTV = findViewById(R.id.taskName);
         userNameTV = findViewById(R.id.taskUser);
         dueDateTV = findViewById(R.id.taskDueDate);
-
         goBack = findViewById(R.id.returnButton);
 
         Intent from = getIntent();
-        String taskName = from.getStringExtra("TaskName");
-        Log.d("Intent Task Name", taskName);
-        tDatabase = database.getReference("tasks");
         String ID = from.getStringExtra("ID");
+        String taskName = from.getStringExtra("TaskName");
         String roomName = from.getStringExtra("roomName");
+
+        tDatabase = database.getReference("tasks");
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +84,6 @@ public class TaskDetails extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
 
     }
 
