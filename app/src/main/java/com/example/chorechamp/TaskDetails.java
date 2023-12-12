@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Iterator;
+
 public class TaskDetails extends AppCompatActivity {
 
     private DatabaseReference tDatabase;
@@ -59,44 +61,38 @@ public class TaskDetails extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        // This method will be called when a new intent is received.
-
-        // Retrieve data from the new intent:
         String taskName = intent.getStringExtra("TaskName");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        tDatabase = database.getReference("tasks");
+        String ID = intent.getStringExtra("ID");
 
-        // Perform actions based on the received intent data
-        if (taskName != null) {
-            // Specify the path to the document using the collection name and document key
-            DatabaseReference documentReference = tDatabase.child(taskName);
+        tDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String taskN = "";
+                String userN = "";
+                int dueDate = 0;
 
-            // Add a ValueEventListener to retrieve data from the specified document
-            documentReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // Handle the data snapshot here
-                    if (dataSnapshot.exists()) {
-                        // The document exists, retrieve data
-                        String taskN = dataSnapshot.child("user").getValue(String.class);
-                        String userN = dataSnapshot.child("taskName").getValue(String.class);
-                        int dueDate = Integer.parseInt(dataSnapshot.child("dueDate").getValue(String.class));
-                        String roomID = dataSnapshot.child("roomID").getValue(String.class);
-
-                        taskNameTV.setText(taskN);
-                        userNameTV.setText(userN);
-                        dueDateTV.setText(dueDate);
-
-                    } else {
-                        // The document does not exist
-                        Log.d("FirebaseData", "Document does not exist");
+                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                for (DataSnapshot d: snapshot.getChildren()) {
+                    Task t = (Task) d.getValue();
+                    Log.d("Task Name", t.getTaskName().toString());
+                    if (t.getTaskName().equals(taskName)) {
+                        taskN = t.getTaskName();
+                        userN = t.getUser();
+                        dueDate = t.getDueDate();
                     }
                 }
+                taskNameTV.setText(taskN);
+                userNameTV.setText(userN);
+                dueDateTV.setText(dueDate);
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-        }
+            }
+        });
     }
 
 }
