@@ -44,7 +44,7 @@ public class TaskDetails extends AppCompatActivity {
         Intent from = getIntent();
         String ID = from.getStringExtra("ID");
         String taskName = from.getStringExtra("TaskName");
-        String roomName = from.getStringExtra("roomName");
+        String roomName = from.getStringExtra("name");
 
         tDatabase = database.getReference("tasks");
 
@@ -53,7 +53,7 @@ public class TaskDetails extends AppCompatActivity {
             public void onClick(View view) {
                 Intent back = new Intent(getApplicationContext(), RoomHome.class);
                 back.putExtra("ID", ID);
-                back.putExtra("Room", roomName);
+                back.putExtra("name", roomName);
                 startActivity(back);
             }
         });
