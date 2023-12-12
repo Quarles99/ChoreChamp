@@ -41,26 +41,22 @@ public class TaskDetails extends AppCompatActivity {
 
         goBack = findViewById(R.id.returnButton);
 
+        Intent from = getIntent();
+        String taskName = from.getStringExtra("TaskName");
+        Log.d("Intent Task Name", taskName);
+        tDatabase = database.getReference("tasks");
+        String ID = from.getStringExtra("ID");
+        String roomName = from.getStringExtra("roomName");
+
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent back = new Intent(getApplicationContext(), RoomHome.class);
+                back.putExtra("ID", ID);
+                back.putExtra("Room", roomName);
                 startActivity(back);
             }
         });
-
-        Intent from = getIntent();
-
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        String taskName = intent.getStringExtra("TaskName");
-        Log.d("Intent Task Name", taskName);
-        tDatabase = database.getReference("tasks");
-        String ID = intent.getStringExtra("ID");
 
         tDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -72,7 +68,7 @@ public class TaskDetails extends AppCompatActivity {
 
                 //Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
                 for (DataSnapshot d: snapshot.getChildren()) {
-                    Task t = (Task) d.getValue();
+                    Task t = d.getValue(Task.class);
                     Log.d("Task Name", t.getTaskName().toString());
                     if (t.getTaskName().equals(taskName)) {
                         taskN = t.getTaskName();
@@ -93,6 +89,14 @@ public class TaskDetails extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+
     }
 
 }
