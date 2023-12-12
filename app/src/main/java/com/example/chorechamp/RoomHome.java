@@ -104,6 +104,7 @@ public class RoomHome extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AddTask.class);
                 i.putExtra("ID", roomID);
+                i.putExtra("Room", roomName);
                 startActivity(i);
             }
         });
