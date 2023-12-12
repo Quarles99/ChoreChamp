@@ -83,7 +83,7 @@ public class TaskDetails extends AppCompatActivity {
                 }
                 taskNameTV.setText(taskN);
                 userNameTV.setText(userN);
-                dueDateTV.setText(dueDate);
+                dueDateTV.setText(String.valueOf(dueDate));
             }
 
             @Override
