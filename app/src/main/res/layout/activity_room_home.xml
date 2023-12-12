@@ -16,6 +16,19 @@
         android:textStyle="bold"
         android:typeface="sans" />
 
+    <TextView
+        android:id="@+id/textViewIDName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewRoomName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Room Name"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
     <Button
         android:id="@+id/addTask"
         android:layout_width="match_parent"
@@ -30,7 +43,7 @@
     <ListView
         android:id="@+id/listViewToDo"
         android:layout_width="match_parent"
-        android:layout_below="@+id/textViewRoomName"
+        android:layout_below="@+id/textViewIDName"
         android:background="@drawable/rounded_corners"
         android:layout_height="wrap_content"
         android:layout_above="@id/divider"
