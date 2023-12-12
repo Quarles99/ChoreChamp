@@ -53,6 +53,10 @@ public class AddTask extends AppCompatActivity {
                 Intent i = getIntent();
                 String roomID = i.getStringExtra("ID");
 
+                Intent intent = getIntent();
+                String id = intent.getStringExtra("ID");
+                String name = intent.getStringExtra("Room");
+
                 Task t = new Task(userName, taskName, dueDate, roomID);
                 Log.d("task Create", t.toString());
 
@@ -62,6 +66,8 @@ public class AddTask extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Task added!", Toast.LENGTH_SHORT);
                 Intent back = new Intent(getApplicationContext(), RoomHome.class);
+                back.putExtra("ID", id);
+                back.putExtra("name", name);
                 startActivity(back);
 
             }
