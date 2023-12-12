@@ -64,19 +64,14 @@ public class TaskDetails extends AppCompatActivity {
                 String taskN = "";
                 String userN = "";
                 int dueDate = 0;
-                Log.d("Data change", "data change");
 
                 //Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
                 for (DataSnapshot d: snapshot.getChildren()) {
                     Task t = d.getValue(Task.class);
-                    Log.d("Task Name", t.getTaskName().toString());
                     if (t.getTaskName().equals(taskName)) {
                         taskN = t.getTaskName();
                         userN = t.getUser();
                         dueDate = t.getDueDate();
-                        Log.d("TaskName from Database", taskN);
-                        Log.d("UserName from Database", userN);
-                        Log.d("DueDate from Database", String.valueOf(dueDate));
                     }
                 }
                 taskNameTV.setText(taskN);
