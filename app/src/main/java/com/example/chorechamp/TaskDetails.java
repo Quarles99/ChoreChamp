@@ -53,7 +53,7 @@ public class TaskDetails extends AppCompatActivity {
             public void onClick(View view) {
                 Intent back = new Intent(getApplicationContext(), RoomHome.class);
                 back.putExtra("ID", ID);
-                back.putExtra("Room", roomName);
+                back.putExtra("name", roomName);
                 startActivity(back);
             }
         });
