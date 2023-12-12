@@ -46,14 +46,14 @@ public class TaskDetails extends AppCompatActivity {
         Log.d("Intent Task Name", taskName);
         tDatabase = database.getReference("tasks");
         String ID = from.getStringExtra("ID");
-        String roomName = from.getStringExtra("roomName");
+        String roomName = from.getStringExtra("name");
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent back = new Intent(getApplicationContext(), RoomHome.class);
                 back.putExtra("ID", ID);
-                back.putExtra("Room", roomName);
+                back.putExtra("name", roomName);
                 startActivity(back);
             }
         });

@@ -55,7 +55,7 @@ public class AddTask extends AppCompatActivity {
 
                 Intent intent = getIntent();
                 String id = intent.getStringExtra("ID");
-                String name = intent.getStringExtra("Room");
+                String name = intent.getStringExtra("name");
 
                 Task t = new Task(userName, taskName, dueDate, roomID);
                 Log.d("task Create", t.toString());
